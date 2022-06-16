@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  height: 40vh;
+  height: 100%;
 }
 
 .new-recipe-middle {

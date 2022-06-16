@@ -11,8 +11,6 @@ import '../App.css';
 const CreateUser = () => {
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState(new Date());
-
   const {
     register,
     handleSubmit,
