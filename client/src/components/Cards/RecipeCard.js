@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
@@ -8,6 +10,15 @@ import {
 import './RecipeCard.css';
 
 const RecipeCard = ({ recipeData, setSelectedCard }) => {
+  const [like, setLike] = useState(false);
+
+  const handleLike = () => {
+    setLike(true);
+  };
+  const handleDislike = () => {
+    setLike(false);
+  };
+
   return (
     <div className='card-wrapper'>
       <div
@@ -31,7 +42,12 @@ const RecipeCard = ({ recipeData, setSelectedCard }) => {
             {recipeData.numberOfPeople} people
           </div>
           <div className='card-stars' style={{ marginLeft: '10px' }}>
-            <FontAwesomeIcon icon={faStar} color='gray' /> 30
+            <FontAwesomeIcon
+              icon={faStar}
+              color={like ? '#f0972a' : 'gray'}
+              onClick={like ? handleDislike : handleLike}
+            />{' '}
+            30
           </div>
           <div className='card-button'>
             <button onClick={() => setSelectedCard(recipeData)}>

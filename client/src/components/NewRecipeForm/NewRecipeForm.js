@@ -3,10 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import InputComp from '../InputComp';
 import './NewRecipeForm.css';
-// import { useNavigate } from 'react-router-dom';
-// import { useState, useEffect } from 'react';
-
-// const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const NewRecipeForm = () => {
   let { id } = useParams();
@@ -60,14 +56,16 @@ const NewRecipeForm = () => {
         >
           <div className='image-title'>Recipe Image</div>
 
-          <img
-            src={
-              img === undefined || img === []
-                ? 'https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg'
-                : URL.createObjectURL(img[0])
-            }
-            alt='recipe_img'
-          />
+          <div className='image-wrapper'>
+            <img
+              src={
+                img === undefined || img === []
+                  ? 'https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg'
+                  : URL.createObjectURL(img[0])
+              }
+              alt='recipe_img'
+            />
+          </div>
 
           {console.log(img)}
           <input

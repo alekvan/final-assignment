@@ -1,5 +1,5 @@
 .form-wrapper {
-  max-height: 100vh;
+  min-height: 35vh;
 }
 
 .form-style {
@@ -34,10 +34,18 @@
   margin-bottom: 0.5rem;
 }
 
-.new-recipe-left > img {
-  box-shadow: 0px 3px 6px #00000029;
+.image-wrapper {
   width: 95%;
+  height: 50%;
+}
+
+.image-wrapper > img {
+  box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  /* margin: -10px 0px 0px -180px; */
 }
 
 .meal-category {
@@ -79,6 +87,7 @@
 
 .short-description {
   margin-top: 1.5rem;
+  width: 99%;
 }
 
 .short-description > label {
@@ -124,6 +133,7 @@
 }
 
 .upload-image-label {
+  display: absolute;
   font: normal normal normal 16px/35px Roboto !important;
   width: 95%;
   height: 2rem;
@@ -134,16 +144,20 @@
   font-size: 16px;
   background: none;
   color: #a5a5a5 !important;
+  z-index: 10;
 }
 
 .recipe-submit-btn {
   display: flex;
-  height: 4rem;
-  width: 6rem;
+  padding: 0.6rem 0;
+  font-family: Roboto;
+  font-size: large;
+  color: white;
+  width: 8rem;
   background-color: #96bb36;
   border: 0;
   border-radius: 5px;
-  margin-left: 20%;
+  margin-left: 21.2%;
   margin-top: 1rem;
   justify-content: center;
 }

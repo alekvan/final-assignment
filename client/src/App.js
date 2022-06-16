@@ -53,6 +53,10 @@ function App() {
             path='/create-recipe/:id'
             element={isLoggedIn ? <CreateRecipe /> : <Navigate to='/login' />}
           />
+          {/* <Route
+            path='/edit-recipe/:id'
+            element={isLoggedIn ? <EditRecipe /> : <Navigate to='/login' />}
+          /> */}
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>

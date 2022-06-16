@@ -12,7 +12,6 @@ const app = express();
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.wjvri.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
 );
-
 app.use(cors());
 
 app.use(logger('dev'));
