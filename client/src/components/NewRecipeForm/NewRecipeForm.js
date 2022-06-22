@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import InputComp from '../InputComp';
 import './NewRecipeForm.css';
+import { request } from '../../util/request';
 
-const NewRecipeForm = () => {
+const NewRecipeForm = ({ requestMethod, currentData }) => {
   let { id } = useParams();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -28,16 +29,25 @@ const NewRecipeForm = () => {
       }
     }
     e.preventDefault();
-    axios
-      .post(`http://localhost:5000/recipes/${id}`, data, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
-      })
-      .then((res) => {})
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    request(requestMethod, `http://localhost:5000/recipes/${id}`, data, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    })
+      .then((res) => console.log(res.message))
+      .catch((err) => console.log(err));
+
+    // axios
+    //   .post(`http://localhost:5000/recipes/${id}`, data, {
+    //     headers: {
+    //       Authorization: 'Bearer ' + localStorage.getItem('token'),
+    //     },
+    //   })
+    //   .then((res) => {})
+    //   .catch((error) => {
+    //     alert(error.response.data.message);
+    //   });
+    navigate(`/my-recipes/${id}`, { replace: true });
   };
 
   const onError = (err) => {
@@ -59,7 +69,7 @@ const NewRecipeForm = () => {
           <div className='image-wrapper'>
             <img
               src={
-                img === undefined || img === []
+                img === undefined || img === [] || img.length === 0
                   ? 'https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg'
                   : URL.createObjectURL(img[0])
               }
@@ -67,7 +77,6 @@ const NewRecipeForm = () => {
             />
           </div>
 
-          {console.log(img)}
           <input
             type='file'
             id='recipeImg'
@@ -120,34 +129,76 @@ const NewRecipeForm = () => {
               </select>
             </div>
 
-            <InputComp
-              type='number'
-              inputGroupName='prep-time'
-              label='Preperation Time'
-              placeholder='45'
-              name='prepTime'
-              register={{
-                ...register('prepTime', { required: true }),
-              }}
-            />
-            <InputComp
-              type='number'
-              inputGroupName='people'
-              label='No. People'
-              placeholder='4'
-              name='numberOfPeople'
-              register={{
-                ...register('numberOfPeople', { required: true }),
-              }}
-            />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <InputComp
+                type='number'
+                inputGroupName='prep-time'
+                label='Preperation Time'
+                placeholder='45'
+                name='prepTime'
+                register={{
+                  ...register('prepTime', { required: true }),
+                }}
+              />
+              {errors.prepTime && errors.prepTime.type === 'required' && (
+                <span
+                  style={{
+                    color: 'red',
+                    fontFamily: 'Roboto Slab',
+                    fontWeight: 700,
+                    fontSize: '12px',
+                  }}
+                >
+                  This field is required
+                </span>
+              )}
+              {console.log(errors.prepTime)}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <InputComp
+                type='number'
+                inputGroupName='people'
+                label='No. People'
+                placeholder='4'
+                name='numberOfPeople'
+                register={{
+                  ...register('numberOfPeople', { required: true }),
+                }}
+              />
+              {errors.numberOfPeople &&
+                errors.numberOfPeople.type === 'required' && (
+                  <span
+                    style={{
+                      color: 'red',
+                      fontFamily: 'Roboto Slab',
+                      fontWeight: 700,
+                      fontSize: '12px',
+                    }}
+                  >
+                    This field is required
+                  </span>
+                )}
+            </div>
           </div>
           <div className='short-description'>
             <label htmlFor='shortDesc'>Short Description</label>
             <textarea
               id='shortDesc'
               placeholder='TLDR of a recipe'
-              {...register('shortDesc', { required: true })}
+              {...register('shortDesc', { required: true, maxLength: 320 })}
             ></textarea>
+            {errors.shortDesc && errors.shortDesc.type === 'maxLength' && (
+              <span
+                style={{
+                  color: 'red',
+                  fontFamily: 'Roboto Slab',
+                  fontWeight: 700,
+                  fontSize: '12px',
+                }}
+              >
+                Max length exceeded (300 characters)
+              </span>
+            )}
           </div>
         </div>
         <div className='new-recipe-right'>

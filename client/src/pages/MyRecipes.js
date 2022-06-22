@@ -22,7 +22,7 @@ const MyRecipes = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.message);
         setTableData(res.data.user.recipes);
       })
       .catch((err) => console.log(err));

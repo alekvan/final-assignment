@@ -1,15 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './RecipeTable.css';
 
 const RecipeTable = ({ tableData }) => {
-  // const deleteRecipe = (recipeId) => {
-  //     props.deleteRecipe(recipeId);
-  // };
-
-  let useless = false;
+  const navigate = useNavigate();
 
   const handleDeleteRecipe = (recipeId) => {
     axios
@@ -18,8 +15,12 @@ const RecipeTable = ({ tableData }) => {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       })
-      .then((res) => console.log(res.data))
+      .then((res) => console.log(res.data.message))
       .catch((err) => console.log(err));
+  };
+
+  const handleEditRecipe = (recipeId) => {
+    navigate(`/edit-recipe/${recipeId}`);
   };
 
   return (
@@ -48,7 +49,11 @@ const RecipeTable = ({ tableData }) => {
       </thead>
       <tbody>
         {tableData.map((recipe) => (
-          <tr className='table-row'>
+          <tr
+            className='table-row'
+            key={recipe._id}
+            onClick={() => handleEditRecipe(recipe._id)}
+          >
             <td className='recipe-table-row'>{recipe.recipeTitle}</td>
             <td className='recipe-table-row'>
               <button>{recipe.category}</button>
@@ -61,12 +66,7 @@ const RecipeTable = ({ tableData }) => {
                 onClick={() => handleDeleteRecipe(recipe._id)}
                 style={{ border: '0', background: 'none' }}
               >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  size={useless ? 'xl' : 'l'}
-                  onMouseEnter={(useless = true)}
-                  onMouseLeave={(useless = false)}
-                />
+                <FontAwesomeIcon icon={faTrashCan} size='xl' />
               </button>
             </td>
           </tr>

@@ -8,6 +8,8 @@ const InputComp = ({
   register,
   onChange,
   onBlur,
+  value,
+  ref,
 }) => (
   <div
     className={inputGroupName}
@@ -26,6 +28,8 @@ const InputComp = ({
       id={name}
       className={className}
       placeholder={placeholder}
+      value={value}
+      ref={ref}
       {...register}
     />
   </div>

@@ -40,9 +40,9 @@ router
   .get('/dinner', controller.getDinnerRecipes)
   .get('/new', controller.newRecipes)
   .get('/popular', controller.popularRecipes)
-  .get('/:id', controller.getOneById)
+  .patch('/:recipeId', upload.single('recipeImg'), controller.edit)
+  .get('/:recipeId', controller.getOneById)
   .post('/:id', upload.single('recipeImg'), controller.create)
   .delete('/:id', controller.destroy);
-// .patch('/',upload.single('image'), controller.create);
 
 module.exports = router;

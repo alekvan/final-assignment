@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
@@ -8,17 +7,9 @@ import {
   faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons';
 import './RecipeCard.css';
+import LikeComp from '../LikeComp';
 
 const RecipeCard = ({ recipeData, setSelectedCard }) => {
-  const [like, setLike] = useState(false);
-
-  const handleLike = () => {
-    setLike(true);
-  };
-  const handleDislike = () => {
-    setLike(false);
-  };
-
   return (
     <div className='card-wrapper'>
       <div
@@ -41,14 +32,7 @@ const RecipeCard = ({ recipeData, setSelectedCard }) => {
             <FontAwesomeIcon icon={faUtensils} color='gray' />{' '}
             {recipeData.numberOfPeople} people
           </div>
-          <div className='card-stars' style={{ marginLeft: '10px' }}>
-            <FontAwesomeIcon
-              icon={faStar}
-              color={like ? '#f0972a' : 'gray'}
-              onClick={like ? handleDislike : handleLike}
-            />{' '}
-            30
-          </div>
+          <LikeComp recipeLikes={recipeData.likes} recipeId={recipeData._id} />
           <div className='card-button'>
             <button onClick={() => setSelectedCard(recipeData)}>
               <FontAwesomeIcon icon={faAnglesRight} color='white' />

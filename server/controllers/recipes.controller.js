@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const Recipes = require('../models/recipe.model');
 const Users = require('../models/user.model');
 const response = require('../util/responseHandler');
+const { unlink } = require('fs');
 
 require('dotenv').config();
 
@@ -151,9 +152,9 @@ const popularRecipes = async (req, res) => {
 
 const getOneById = async (req, res) => {
   try {
-    const recipe = await Recipes.findById(req.params.id);
+    const recipe = await Recipes.findById(req.params.recipeId);
 
-    response(res, 200, `Recipe with ID#${req.params.id} is fetched`, {
+    response(res, 200, `Recipe with ID#${req.params.recipeId} is fetched`, {
       recipe,
     });
   } catch (err) {
@@ -164,9 +165,6 @@ const getOneById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    console.log(req.file);
-    console.log(req.file.filename);
-    console.log(req.params.id);
     req.body.createdBy = req.params.id;
     req.body.recipeImg = `http://localhost:5000/images/${req.file.filename}`;
     req.body.likes = 0;
@@ -183,6 +181,28 @@ const create = async (req, res) => {
     response(res, 400, 'Invalid input');
   }
 };
+
+const edit = async (req, res) => {
+  try {
+    const recipe = await Recipes.findById(req.params.recipeId);
+    const oldImgFilename = recipe.recipeImg.split('/');
+    console.log(oldImgFilename);
+    unlink(`public/images/${oldImgFilename[4]}`, (err) => {
+      if (err) throw err;
+      console.log('Old image was deleted');
+    });
+    req.body.likes = recipe.likes;
+    req.body.createdBy = recipe.createdBy;
+    if (req.file.filename) {
+      req.body.recipeImg = `http://localhost:5000/images/${req.file.filename}`;
+    }
+    await Recipes.findByIdAndUpdate(req.params.recipeId, req.body);
+    response(res, 200, 'Recipe updated');
+  } catch (error) {
+    response(res, 401, 'Invalid input');
+  }
+};
+
 const destroy = async (req, res) => {
   const authToken = await req.headers.authorization;
   const token = authToken.split(' ')[1];
@@ -208,4 +228,5 @@ module.exports = {
   newRecipes,
   popularRecipes,
   destroy,
+  edit,
 };

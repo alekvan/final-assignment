@@ -7,7 +7,6 @@ import { logout } from '../redux/slices/userLogin';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import moment from 'moment';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 const UserProfile = () => {

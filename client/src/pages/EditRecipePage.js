@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+// import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 import ButtonComp from '../components/ButtonComp';
 import SectionTitle from '../components/SectionTitle';
-import NewRecipeForm from '../components/NewRecipeForm/NewRecipeForm';
 import { selectUser } from '../redux/slices/userLogin';
+import EditRecipe from '../components/EditRecipe';
 
-const CreateRecipe = () => {
+const EditRecipePage = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+
   return (
     <>
       <SectionTitle
-        title={'Create New Recipe'}
+        title={'Edit Recipe'}
         button={
           <ButtonComp
             type='add-new-recipe'
@@ -25,9 +26,9 @@ const CreateRecipe = () => {
           />
         }
       />
-      <NewRecipeForm requestMethod='POST' />
+      <EditRecipe />
     </>
   );
 };
 
-export default CreateRecipe;
+export default EditRecipePage;

@@ -46,6 +46,8 @@
 .card-bottom > div > p {
   word-break: break-word;
   white-space: normal;
+  font-family: Roboto;
+  color: #a5a5a5;
 }
 
 .card-icons {
@@ -74,8 +76,4 @@
 .card-bottom > div > h2 {
   font-family: Roboto Slab;
   color: #f0972a;
-}
-.card-bottom > div > p {
-  font-family: Roboto;
-  color: #a5a5a5;
 }

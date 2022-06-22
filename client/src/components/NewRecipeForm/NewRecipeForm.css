@@ -1,6 +1,6 @@
-.form-wrapper {
-  min-height: 35vh;
-}
+/* .form-wrapper {
+  max-height: 35vh;
+} */
 
 .form-style {
   display: flex;
@@ -32,6 +32,10 @@
 .new-recipe-right > label {
   display: inline-block;
   margin-bottom: 0.5rem;
+}
+
+.prep-time {
+  display: relative;
 }
 
 .image-wrapper {
@@ -99,7 +103,7 @@
   resize: none;
   overflow: auto;
   width: 99.5%;
-  height: 6.4rem;
+  height: 6.5rem;
   padding: 5px;
   border-radius: 5px;
   font-family: Roboto;

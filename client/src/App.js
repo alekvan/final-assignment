@@ -17,11 +17,10 @@ import MyRecipes from './pages/MyRecipes';
 import Footer from './components/Footer/Footer';
 import CreateRecipe from './pages/CreateRecipe';
 import NotFound from './pages/NotFound';
+import EditRecipePage from './pages/EditRecipePage';
 
 function App() {
   const isLoggedIn = useSelector(selectUser);
-
-  console.log(isLoggedIn);
 
   return (
     <BrowserRouter>
@@ -53,10 +52,10 @@ function App() {
             path='/create-recipe/:id'
             element={isLoggedIn ? <CreateRecipe /> : <Navigate to='/login' />}
           />
-          {/* <Route
-            path='/edit-recipe/:id'
-            element={isLoggedIn ? <EditRecipe /> : <Navigate to='/login' />}
-          /> */}
+          <Route
+            path='/edit-recipe/:recipeId'
+            element={isLoggedIn ? <EditRecipePage /> : <Navigate to='/login' />}
+          />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
