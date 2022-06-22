@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const LikeComp = ({ recipeLikes, recipeId }) => {
+const LikeComp = ({ recipeLikes, recipeId, className }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
@@ -12,7 +12,7 @@ const LikeComp = ({ recipeLikes, recipeId }) => {
     setLike(false);
   };
   return (
-    <div className='card-stars' style={{ marginLeft: '10px' }}>
+    <div className={className}>
       <FontAwesomeIcon
         icon={faStar}
         color={like ? '#f0972a' : 'gray'}

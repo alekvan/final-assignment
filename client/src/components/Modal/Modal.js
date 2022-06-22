@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
   faClock,
-  faStar,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import './Modal.css';
+import LikeComp from '../LikeComp';
 
 const Modal = ({ selectedCard, setSelectedCard }) => {
   const handleClick = () => {
@@ -50,9 +50,11 @@ const Modal = ({ selectedCard, setSelectedCard }) => {
                 <FontAwesomeIcon icon={faUtensils} color='gray' />{' '}
                 {selectedCard.numberOfPeople} people
               </div>
-              <div className='modal-stars' style={{ marginLeft: '10px' }}>
-                <FontAwesomeIcon icon={faStar} color='gray' /> 30
-              </div>
+              <LikeComp
+                recipeLikes={selectedCard.likes}
+                recipeId={selectedCard._id}
+                className='modal-stars'
+              />
             </div>
           </div>
           <div className='modal-body-right'>

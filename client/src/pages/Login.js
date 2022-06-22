@@ -26,7 +26,7 @@ const Login = () => {
       .then((res) => {
         localStorage.setItem('token', res.data.token);
         dispatch(login({ userId: `${res.data.id}`, isLoggedIn: true }));
-        navigate('/1', { replace: true });
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         alert(error.response.data.message);

@@ -117,6 +117,10 @@
   white-space: normal;
 }
 
+.modal-stars {
+  margin-left: 10px;
+}
+
 @media only screen and (max-width: 1400px) {
   .backdrop .modal-wrapper {
     margin: 2rem 14rem;

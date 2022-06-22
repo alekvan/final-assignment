@@ -32,7 +32,11 @@ const RecipeCard = ({ recipeData, setSelectedCard }) => {
             <FontAwesomeIcon icon={faUtensils} color='gray' />{' '}
             {recipeData.numberOfPeople} people
           </div>
-          <LikeComp recipeLikes={recipeData.likes} recipeId={recipeData._id} />
+          <LikeComp
+            recipeLikes={recipeData.likes}
+            recipeId={recipeData._id}
+            className='card-stars'
+          />
           <div className='card-button'>
             <button onClick={() => setSelectedCard(recipeData)}>
               <FontAwesomeIcon icon={faAnglesRight} color='white' />
