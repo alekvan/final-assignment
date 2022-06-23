@@ -42,7 +42,12 @@ const UserProfile = () => {
       .then((res) => setAddUserFormData(res.data.user))
       .catch((err) => {
         alert('Error ' + err);
-        dispatch(logout());
+        dispatch(
+          logout({
+            userId: '',
+            isLoggedIn: false,
+          })
+        );
         navigate('/', { replace: true });
       });
   }, []);
@@ -51,10 +56,6 @@ const UserProfile = () => {
     const { name, value } = e.target;
     setAddUserFormData((prevState) => ({ ...prevState, [name]: value }));
   };
-
-  console.log(addUserFormData);
-
-  console.log(moment(addUserFormData.birthday).format('DD-MM-yyyy'));
 
   return (
     <>

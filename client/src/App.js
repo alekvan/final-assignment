@@ -21,6 +21,7 @@ import EditRecipePage from './pages/EditRecipePage';
 
 function App() {
   const isLoggedIn = useSelector(selectUser);
+  console.log(isLoggedIn);
 
   return (
     <BrowserRouter>
@@ -34,27 +35,45 @@ function App() {
           <Route path='/dinner/:pageNumber' element={<Dinner />} />
           <Route
             path='/login'
-            element={isLoggedIn ? <Navigate to='/' /> : <Login />}
+            element={isLoggedIn.isLoggedIn ? <Navigate to='/' /> : <Login />}
           />
           <Route
             path='/register'
-            element={isLoggedIn ? <Navigate to='/' /> : <CreateUser />}
+            element={
+              isLoggedIn.isLoggedIn ? <Navigate to='/' /> : <CreateUser />
+            }
           />
           <Route
             path='/profile/:id'
-            element={isLoggedIn ? <UserProfile /> : <Navigate to='/login' />}
+            element={
+              isLoggedIn.isLoggedIn ? <UserProfile /> : <Navigate to='/login' />
+            }
           />
           <Route
             path='/my-recipes/:id'
-            element={isLoggedIn ? <MyRecipes /> : <Navigate to='/login' />}
+            element={
+              isLoggedIn.isLoggedIn ? <MyRecipes /> : <Navigate to='/login' />
+            }
           />
           <Route
             path='/create-recipe/:id'
-            element={isLoggedIn ? <CreateRecipe /> : <Navigate to='/login' />}
+            element={
+              isLoggedIn.isLoggedIn ? (
+                <CreateRecipe />
+              ) : (
+                <Navigate to='/login' />
+              )
+            }
           />
           <Route
             path='/edit-recipe/:recipeId'
-            element={isLoggedIn ? <EditRecipePage /> : <Navigate to='/login' />}
+            element={
+              isLoggedIn.isLoggedIn ? (
+                <EditRecipePage />
+              ) : (
+                <Navigate to='/login' />
+              )
+            }
           />
           <Route path='*' element={<NotFound />} />
         </Routes>

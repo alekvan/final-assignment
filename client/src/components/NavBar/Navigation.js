@@ -38,7 +38,7 @@ function Navigation() {
         />
         <Link to='/dinner/1'>Dinner</Link>
       </div>
-      {user ? (
+      {user.isLoggedIn ? (
         <div className='logged-in-navigation'>
           <Link
             to={`/my-recipes/${user.userId}`}
@@ -77,7 +77,12 @@ function Navigation() {
               color: '#B5B5B4',
             }}
             onClick={() => {
-              dispatch(logout());
+              dispatch(
+                logout({
+                  userId: '',
+                  isLoggedIn: false,
+                })
+              );
               localStorage.removeItem('token');
             }}
           >

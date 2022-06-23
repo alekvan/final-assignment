@@ -42,6 +42,7 @@ router
   .get('/popular', controller.popularRecipes)
   .patch('/:recipeId', upload.single('recipeImg'), controller.edit)
   .get('/:recipeId', controller.getOneById)
+  .post('/likes', controller.likes)
   .post('/:id', upload.single('recipeImg'), controller.create)
   .delete('/:id', controller.destroy);
 

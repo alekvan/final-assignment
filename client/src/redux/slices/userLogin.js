@@ -12,9 +12,9 @@ export const userLogin = createSlice({
     login: (state, action) => {
       state.user = action.payload;
     },
-    logout: (state) => {
+    logout: (state, action) => {
       localStorage.removeItem('token');
-      state.user = null;
+      state.user = action.payload;
     },
   },
 });

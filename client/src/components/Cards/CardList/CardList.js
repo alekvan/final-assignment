@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipeCard from '../RecipeCard';
 import axios from 'axios';
-import Modal from '../../Modal/Modal';
 import Pagination from '../../Pagination/Pagination';
 
 const CardList = ({ filterByCategory }) => {
@@ -55,14 +54,9 @@ const CardList = ({ filterByCategory }) => {
             key={recipe._id}
             recipeData={recipe}
             setSelectedCard={setSelectedCard}
+            selectedCard={selectedCard}
           />
         ))}
-        {selectedCard && (
-          <Modal
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
-          />
-        )}
       </div>
       {filterByCategory !== 'new' && (
         <Pagination

@@ -34,10 +34,12 @@ const recipeSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'user',
     },
-    likes: {
-      type: Number,
-      required: true,
-    },
+    likes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
   },
   { timestamps: true }
 );

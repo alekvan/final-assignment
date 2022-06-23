@@ -163,6 +163,27 @@ const getOneById = async (req, res) => {
   }
 };
 
+const likes = async (req, res) => {
+  try {
+    const recipe = await Recipes.findById(req.body.recipeId);
+    const userId = req.body.userId;
+    const recipeId = req.body.recipeId;
+    if (recipe.likes.includes(userId)) {
+      await Recipes.findByIdAndUpdate(recipeId, {
+        $pull: { likes: userId },
+      });
+      response(res, 200, 'Unliked', { like: false, likeArr: recipe.likes });
+    } else {
+      await Recipes.findByIdAndUpdate(recipeId, {
+        $push: { likes: userId },
+      });
+      response(res, 200, 'Liked', { like: true, likeArr: recipe.likes });
+    }
+  } catch (err) {
+    response(res, 404, err);
+  }
+};
+
 const create = async (req, res) => {
   try {
     req.body.createdBy = req.params.id;
@@ -228,5 +249,6 @@ module.exports = {
   newRecipes,
   popularRecipes,
   destroy,
+  likes,
   edit,
 };
