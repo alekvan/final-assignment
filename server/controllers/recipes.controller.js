@@ -131,8 +131,13 @@ const newRecipes = async (req, res) => {
 const popularRecipes = async (req, res) => {
   try {
     const recipes = await Recipes.find();
+    const filteredRecipes = recipes.sort(function (a, b) {
+      return a.likes.length - b.likes.length;
+    });
 
-    const pageSize = 3;
+    const firstSix = filteredRecipes.reverse();
+
+    const pageSize = 6;
     // number of current page from query string
     const pageNumber = Number(req.query.pageNumberPopular) || 1;
     // number of first products to skip from the products list
@@ -140,10 +145,10 @@ const popularRecipes = async (req, res) => {
     // server response
 
     response(res, 200, 'Popular recipes', {
-      recipes: recipes.slice(skip, skip + pageSize),
+      recipes: firstSix.slice(skip, skip + pageSize),
       pageNumber,
       pageSize,
-      pages: 3,
+      pages: 1,
     });
   } catch (error) {
     response(res, 404, 'Not Found');

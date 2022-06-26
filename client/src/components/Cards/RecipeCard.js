@@ -7,9 +7,6 @@ import {
 import './RecipeCard.css';
 import LikeComp from '../LikeComp';
 import Modal from '../Modal/Modal';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/slices/userLogin';
 
 const RecipeCard = ({ recipeData, setSelectedCard, selectedCard }) => {
   return (

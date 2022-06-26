@@ -7,45 +7,56 @@ import axios from 'axios';
 
 const EditRecipe = ({ requestMethod }) => {
   let { recipeId } = useParams();
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({
+    editRecipeTitle:'',
+editRecipeDesc:'',
+editCategory:'',
+editNumberOfPeople:'',
+editPrepTime:'',
+editShortDesc:'',
+editRecipeImg:undefined,
+  });
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/recipes/${recipeId}`, {
-        // headers: {
-        //   Authorization: 'Bearer ' + localStorage.getItem('token'),
-        // },
-      })
+      .get(`http://localhost:5000/recipes/${recipeId}`)
       .then((res) => {
-        setInputValues(res.data.recipe);
-        console.log(res.data.recipe);
+        setInputValues({
+          editRecipeTitle: res.data.recipe.recipeTitle,
+          editRecipeDesc: res.data.recipe.recipeDesc,
+          editCategory: res.data.recipe.category,
+          editNumberOfPeople: res.data.recipe.numberOfPeople,
+          editPrepTime: res.data.recipe.prepTime,
+          editShortDesc: res.data.recipe.shortDesc,
+          editRecipeImg: res.data.recipe.recipeImg,
+        });
+        console.log(res.data.recipe.recipeImg);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const handleInputChange = (e) =>
+  function handleInputChange(e) {
+    const value = e.target.value;
     setInputValues((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     }));
-  console.log(inputValues.recipeTitle);
+  }
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      editRecipeTitle: inputValues.recipeTitle,
-    },
-  });
+  } = useForm();
   let img = watch('editRecipeImg');
-  console.log(img);
+  console.log(watch('editRecipeImg'));
 
   const handleSubmitData = (fData, e) => {
     e.preventDefault();
-    console.log(fData['editRecipeImg'][0]);
+    console.log(fData);
     const data = new FormData();
+    console.log(fData['editRecipeImg']);
     data.append('recipeTitle', fData['editRecipeTitle']);
     data.append('recipeImg', fData['editRecipeImg'][0]);
     data.append('recipeDesc', fData['editRecipeDesc']);
@@ -54,9 +65,7 @@ const EditRecipe = ({ requestMethod }) => {
     data.append('numberOfPeople', fData['editNumberOfPeople']);
     data.append('prepTime', fData['editPrepTime']);
 
-    for (var pair of data.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    console.log(fData);
     // for (const key in fData) {
     //   if (key === 'recipeImg') {
     //     data.append(key, fData[key][0]);
@@ -77,7 +86,6 @@ const EditRecipe = ({ requestMethod }) => {
   const onError = (err) => {
     console.log(err);
   };
-
   return (
     <form
       className='form-style'
@@ -94,7 +102,7 @@ const EditRecipe = ({ requestMethod }) => {
             <img
               src={
                 img === undefined || img === [] || img.length === 0
-                  ? inputValues.recipeImg
+                  ? inputValues.editRecipeImg
                   : URL.createObjectURL(img[0])
               }
               alt='recipe_img'
@@ -106,7 +114,9 @@ const EditRecipe = ({ requestMethod }) => {
             id='editRecipeImg'
             style={{ display: 'none' }}
             multiple
-            {...register('editRecipeImg', { required: true })}
+            {...register('editRecipeImg', {
+              onChange: (e) => handleInputChange(e),
+            })}
           />
           <label htmlFor='editRecipeImg' className='upload-image-label'>
             UPLOAD IMAGE
@@ -119,10 +129,11 @@ const EditRecipe = ({ requestMethod }) => {
             label='Recipe Title'
             placeholder='Homemade Pizza'
             name='editRecipeTitle'
-            onChange={(e) => handleInputChange(e)}
-            ref={register}
+            value={inputValues.editRecipeTitle}
             register={{
-              ...register('editRecipeTitle', { required: true }),
+              ...register('editRecipeTitle', {
+                onChange: (e) => handleInputChange(e),
+              }),
             }}
           />
           {errors.recipeTitle && (
@@ -145,7 +156,10 @@ const EditRecipe = ({ requestMethod }) => {
               <label htmlFor='editCategory'>Category</label>
               <select
                 id='editCategory'
-                {...register('editCategory', { required: true })}
+                value={inputValues.editCategory}
+                {...register('editCategory', {
+                  onChange: (e) => handleInputChange(e),
+                })}
               >
                 <option style={{ display: 'none' }}>Select category</option>
                 <option value='breakfast'>Breakfast</option>
@@ -161,8 +175,11 @@ const EditRecipe = ({ requestMethod }) => {
               label='Preperation Time'
               placeholder='45'
               name='editPrepTime'
+              value={inputValues.editPrepTime}
               register={{
-                ...register('editPrepTime', { required: true }),
+                ...register('editPrepTime', {
+                  onChange: (e) => handleInputChange(e),
+                }),
               }}
             />
             <InputComp
@@ -171,8 +188,11 @@ const EditRecipe = ({ requestMethod }) => {
               label='No. People'
               placeholder='4'
               name='editNumberOfPeople'
+              value={inputValues.editNumberOfPeople}
               register={{
-                ...register('editNumberOfPeople', { required: true }),
+                ...register('editNumberOfPeople', {
+                  onChange: (e) => handleInputChange(e),
+                }),
               }}
             />
           </div>
@@ -180,8 +200,11 @@ const EditRecipe = ({ requestMethod }) => {
             <label htmlFor='shortDesc'>Short Description</label>
             <textarea
               id='shortDesc'
+              value={inputValues.editShortDesc}
               placeholder='TLDR of a recipe'
-              {...register('editShortDesc', { required: true })}
+              {...register('editShortDesc', {
+                onChange: (e) => handleInputChange(e),
+              })}
             ></textarea>
           </div>
         </div>
@@ -189,8 +212,11 @@ const EditRecipe = ({ requestMethod }) => {
           <label htmlFor='recipeDesc'>Recipe</label>
           <textarea
             id='recipeDesc'
+            value={inputValues.editRecipeDesc}
             placeholder='TLDR of a recipe'
-            {...register('editRecipeDesc', { required: true })}
+            {...register('editRecipeDesc', {
+              onChange: (e) => handleInputChange(e),
+            })}
           ></textarea>
         </div>
       </div>

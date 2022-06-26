@@ -7,7 +7,7 @@ const Home = () => {
       <SectionTitle title={'Fresh & New'} />
       <CardList filterByCategory={'new'} />
       <SectionTitle title={'Most Popular Recipes'} />
-      {/* <CardList filterByCategory={'popular'} /> */}
+      <CardList filterByCategory={'popular'} />
     </>
   );
 };

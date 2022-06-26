@@ -5,7 +5,7 @@ import { selectUser } from '../redux/slices/userLogin';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const LikeComp = ({ recipeLikes, recipeId, className }) => {
+const LikeComp = ({ recipeId, className }) => {
   const userState = useSelector(selectUser);
   const [numOfLikes, setNumOfLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);

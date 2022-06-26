@@ -15,7 +15,6 @@ const NewRecipeForm = ({ requestMethod, currentData }) => {
   } = useForm();
 
   let img = watch('recipeImg');
-  // console.log(img[0]);
 
   const handleSubmitData = (fData, e) => {
     console.log(fData['recipeImg'][0]);
@@ -37,16 +36,6 @@ const NewRecipeForm = ({ requestMethod, currentData }) => {
       .then((res) => console.log(res.message))
       .catch((err) => console.log(err));
 
-    // axios
-    //   .post(`http://localhost:5000/recipes/${id}`, data, {
-    //     headers: {
-    //       Authorization: 'Bearer ' + localStorage.getItem('token'),
-    //     },
-    //   })
-    //   .then((res) => {})
-    //   .catch((error) => {
-    //     alert(error.response.data.message);
-    //   });
     navigate(`/my-recipes/${id}`, { replace: true });
   };
 

@@ -24,6 +24,18 @@ const CardList = ({ filterByCategory }) => {
         .catch(function (error) {
           console.log(error);
         });
+    } else if (filterByCategory === 'popular') {
+      axios
+        .get(
+          `http://localhost:5000/recipes/${filterByCategory}/?pageNumberNew=${pageNumber}`
+        )
+        .then((res) => {
+          setPages(res.data.pages);
+          setRecipesList(res.data.recipes);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } else {
       axios
         .get(
@@ -58,13 +70,13 @@ const CardList = ({ filterByCategory }) => {
           />
         ))}
       </div>
-      {filterByCategory !== 'new' && (
+      {/* {filterByCategory !== 'new' && (
         <Pagination
           page={pageNumber}
           totalPages={pages}
           category={filterByCategory}
         />
-      )}
+      )} */}
     </>
   );
 };
