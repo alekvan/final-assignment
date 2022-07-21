@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -7,6 +8,7 @@ import './RecipeTable.css';
 
 const RecipeTable = ({ tableData }) => {
   const navigate = useNavigate();
+  const [data, setData] = useState(tableData);
 
   const handleDeleteRecipe = (recipeId) => {
     axios
@@ -17,6 +19,7 @@ const RecipeTable = ({ tableData }) => {
       })
       .then((res) => console.log(res.data.message))
       .catch((err) => console.log(err));
+    setData(data.filter((recipe) => recipe._id !== 0));
   };
 
   const handleEditRecipe = (recipeId) => {
@@ -49,16 +52,23 @@ const RecipeTable = ({ tableData }) => {
       </thead>
       <tbody>
         {tableData.map((recipe) => (
-          <tr
-            className='table-row'
-            key={recipe._id}
-            onClick={() => handleEditRecipe(recipe._id)}
-          >
-            <td className='recipe-table-row'>{recipe.recipeTitle}</td>
-            <td className='recipe-table-row'>
+          <tr className='table-row' key={recipe._id}>
+            <td
+              className='recipe-table-row'
+              onClick={() => handleEditRecipe(recipe._id)}
+            >
+              {recipe.recipeTitle}
+            </td>
+            <td
+              className='recipe-table-row'
+              onClick={() => handleEditRecipe(recipe._id)}
+            >
               <button>{recipe.category}</button>
             </td>
-            <td className='recipe-table-row'>
+            <td
+              className='recipe-table-row'
+              onClick={() => handleEditRecipe(recipe._id)}
+            >
               {moment(recipe.createdAt).format('DD.MM.YYYY')}
             </td>
             <td style={{ textAlign: 'end', paddingRight: '1.3rem' }}>

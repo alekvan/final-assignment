@@ -67,6 +67,7 @@ const CardList = ({ filterByCategory }) => {
             recipeData={recipe}
             setSelectedCard={setSelectedCard}
             selectedCard={selectedCard}
+            setRecipesList={setRecipesList}
           />
         ))}
       </div>

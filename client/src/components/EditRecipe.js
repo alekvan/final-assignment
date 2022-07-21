@@ -8,13 +8,13 @@ import axios from 'axios';
 const EditRecipe = ({ requestMethod }) => {
   let { recipeId } = useParams();
   const [inputValues, setInputValues] = useState({
-    editRecipeTitle:'',
-editRecipeDesc:'',
-editCategory:'',
-editNumberOfPeople:'',
-editPrepTime:'',
-editShortDesc:'',
-editRecipeImg:undefined,
+    editRecipeTitle: '',
+    editRecipeDesc: '',
+    editCategory: '',
+    editNumberOfPeople: '',
+    editPrepTime: '',
+    editShortDesc: '',
+    editRecipeImg: '',
   });
 
   useEffect(() => {
@@ -30,7 +30,6 @@ editRecipeImg:undefined,
           editShortDesc: res.data.recipe.shortDesc,
           editRecipeImg: res.data.recipe.recipeImg,
         });
-        console.log(res.data.recipe.recipeImg);
       })
       .catch((err) => console.log(err));
   }, []);

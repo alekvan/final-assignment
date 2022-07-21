@@ -32,22 +32,13 @@
   min-height: 87vh;
 }
 
+#link-home:hover {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 1600px) {
   .container {
     margin: 2rem 5rem 0 5rem;
     min-height: 100vh;
   }
-}
-
-#birthday {
-  height: 2.2rem;
-  border: 1px solid var(--midgrey);
-  background-color: #f0efea;
-  color: var(--darkgrey);
-  padding-left: 7px;
-  border-radius: 5px 5px 5px 5px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  font-family: Roboto Slab;
-  width: 85.4%;
 }
