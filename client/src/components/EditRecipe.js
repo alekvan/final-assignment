@@ -2,20 +2,12 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import InputComp from './InputComp';
-import './NewRecipeForm/NewRecipeForm.css';
 import axios from 'axios';
+import './NewRecipeForm/NewRecipeForm.css';
 
 const EditRecipe = ({ requestMethod }) => {
   let { recipeId } = useParams();
-  const [inputValues, setInputValues] = useState({
-    editRecipeTitle: '',
-    editRecipeDesc: '',
-    editCategory: '',
-    editNumberOfPeople: '',
-    editPrepTime: '',
-    editShortDesc: '',
-    editRecipeImg: '',
-  });
+  const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
     axios
@@ -34,6 +26,17 @@ const EditRecipe = ({ requestMethod }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    reset({
+      editRecipeTitle: inputValues.recipeTitle,
+      editRecipeDesc: inputValues.recipeDesc,
+      editCategory: inputValues.category,
+      editNumberOfPeople: inputValues.numberOfPeople,
+      editPrepTime: inputValues.prepTime,
+      editShortDesc: inputValues.shortDesc,
+    });
+  }, [inputValues]);
+
   function handleInputChange(e) {
     const value = e.target.value;
     setInputValues((prevState) => ({
@@ -46,10 +49,12 @@ const EditRecipe = ({ requestMethod }) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   let img = watch('editRecipeImg');
-  console.log(watch('editRecipeImg'));
+
+  console.log(img);
 
   const handleSubmitData = (fData, e) => {
     e.preventDefault();
@@ -113,9 +118,7 @@ const EditRecipe = ({ requestMethod }) => {
             id='editRecipeImg'
             style={{ display: 'none' }}
             multiple
-            {...register('editRecipeImg', {
-              onChange: (e) => handleInputChange(e),
-            })}
+            {...register('editRecipeImg')}
           />
           <label htmlFor='editRecipeImg' className='upload-image-label'>
             UPLOAD IMAGE

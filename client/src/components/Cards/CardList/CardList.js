@@ -71,13 +71,13 @@ const CardList = ({ filterByCategory }) => {
           />
         ))}
       </div>
-      {/* {filterByCategory !== 'new' && (
+      {filterByCategory !== 'new' && (
         <Pagination
           page={pageNumber}
           totalPages={pages}
           category={filterByCategory}
         />
-      )} */}
+      )}
     </>
   );
 };

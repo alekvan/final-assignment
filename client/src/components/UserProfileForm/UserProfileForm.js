@@ -88,7 +88,7 @@ const UserProfileForm = () => {
       })
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err.message));
-    console.log(fData);
+    alert('User updated!');
   };
 
   const onError = (err) => {
@@ -117,9 +117,7 @@ const UserProfileForm = () => {
             id='file'
             style={{ display: 'none' }}
             multiple
-            {...register('file', {
-              onChange: (e) => handleInputChange(e),
-            })}
+            {...register('file')}
           />
           <label htmlFor='file' className={styles.imageLabel}>
             CHANGE AVATAR
@@ -174,6 +172,7 @@ const UserProfileForm = () => {
               placeholder='john@smith.com'
               defaultValue={addUserFormData.email}
               {...register('email', {
+                // eslint-disable-next-line no-useless-escape
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                 onChange: (e) => handleInputChange(e),
               })}

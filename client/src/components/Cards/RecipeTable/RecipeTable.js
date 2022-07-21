@@ -9,6 +9,7 @@ import './RecipeTable.css';
 const RecipeTable = ({ tableData }) => {
   const navigate = useNavigate();
   const [data, setData] = useState(tableData);
+  console.log(tableData);
 
   const handleDeleteRecipe = (recipeId) => {
     axios

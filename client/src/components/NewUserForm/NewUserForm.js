@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
@@ -73,7 +72,6 @@ const NewUserForm = () => {
             <span className={styles.invalidInput}>This field is required</span>
           )}
         </div>
-
         <div className={styles.defaultInputWrapper}>
           <label htmlFor='lastName' className={styles.defaultLabel}>
             Last Name
