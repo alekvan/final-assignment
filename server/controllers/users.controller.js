@@ -2,6 +2,7 @@ const Users = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const response = require('../util/responseHandler');
+const { unlink } = require('fs');
 
 const getAll = async (req, res) => {
   try {
@@ -78,9 +79,37 @@ const login = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  await Users.findByIdAndUpdate(req.params.id, req.body);
+  try {
+    console.log(req.body);
+    const user = await Users.findById(req.params.id);
+    const oldImgFilename = user.image.split('/');
 
-  res.send(`User with ID#${req.params.id} has been updated`);
+    if (
+      bcrypt.compareSync(req.body.password, user.password) ||
+      req.body.password === ''
+    ) {
+      req.body.password = user.password;
+    } else {
+      req.body.password = bcrypt.hashSync(req.body.password);
+    }
+    if (req.file) {
+      unlink(
+        `public/images/${oldImgFilename[oldImgFilename.length - 1]}`,
+        () => {
+          console.log('Old image was deleted');
+        }
+      );
+      req.body.image = `http://localhost:5000/images/${req.file.filename}`;
+    } else {
+      req.body.image = user.image;
+    }
+
+    await Users.findByIdAndUpdate(req.params.id, req.body);
+    res.send(`User with ID#${req.params.id} has been updated`);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('Something went wrong');
+  }
 };
 
 const destroy = async (req, res) => {

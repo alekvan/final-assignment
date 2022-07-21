@@ -193,7 +193,7 @@ const create = async (req, res) => {
   try {
     req.body.createdBy = req.params.id;
     req.body.recipeImg = `http://localhost:5000/images/${req.file.filename}`;
-    req.body.likes = 0;
+    req.body.likes = [];
     const newRecipe = await Recipes.create(req.body);
 
     await Users.findByIdAndUpdate(req.params.id, {
@@ -212,15 +212,16 @@ const edit = async (req, res) => {
   try {
     const recipe = await Recipes.findById(req.params.recipeId);
     const oldImgFilename = recipe.recipeImg.split('/');
-    console.log(oldImgFilename);
-    unlink(`public/images/${oldImgFilename[4]}`, (err) => {
-      if (err) throw err;
-      console.log('Old image was deleted');
-    });
     req.body.likes = recipe.likes;
     req.body.createdBy = recipe.createdBy;
-    if (req.file.filename) {
+    if (req.file) {
+      unlink(`public/images/${oldImgFilename[4]}`, (err) => {
+        if (err) throw err;
+        console.log('Old image was deleted');
+      });
       req.body.recipeImg = `http://localhost:5000/images/${req.file.filename}`;
+    } else {
+      req.body.recipeImg = recipe.recipeImg;
     }
     await Recipes.findByIdAndUpdate(req.params.recipeId, req.body);
     response(res, 200, 'Recipe updated');
