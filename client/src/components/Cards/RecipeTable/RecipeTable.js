@@ -20,7 +20,7 @@ const RecipeTable = ({ tableData }) => {
       })
       .then((res) => console.log(res.data.message))
       .catch((err) => console.log(err));
-    setData(data.filter((recipe) => recipe._id !== 0));
+    setData((prevState) => prevState.filter((recipe) => recipe._id !== 0));
   };
 
   const handleEditRecipe = (recipeId) => {
