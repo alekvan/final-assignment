@@ -4,8 +4,11 @@ import { login } from '../../redux/slices/userLogin';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useAlert } from '@blaumaus/react-alert';
 
 const LoginForm = () => {
+  const alert = useAlert();
+
   const {
     register,
     handleSubmit,
@@ -25,9 +28,10 @@ const LoginForm = () => {
         localStorage.setItem('token', res.data.token);
         dispatch(login({ userId: `${res.data.id}`, isLoggedIn: true }));
         navigate('/', { replace: true });
+        alert.success('Successfully logged in');
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        alert.error(error.response.data.message);
       });
   };
 

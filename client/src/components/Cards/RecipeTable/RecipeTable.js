@@ -6,10 +6,8 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './RecipeTable.css';
 
-const RecipeTable = ({ tableData }) => {
+const RecipeTable = ({ tableData, setTableData }) => {
   const navigate = useNavigate();
-  const [data, setData] = useState(tableData);
-  console.log(tableData);
 
   const handleDeleteRecipe = (recipeId) => {
     axios
@@ -18,10 +16,15 @@ const RecipeTable = ({ tableData }) => {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       })
-      .then((res) => console.log(res.data.message))
+      .then(() => {
+        let list = tableData.filter((recipe) => recipe._id !== recipeId);
+        console.log(list);
+        setTableData(list);
+      })
       .catch((err) => console.log(err));
-    setData((prevState) => prevState.filter((recipe) => recipe._id !== 0));
   };
+
+  console.log(tableData);
 
   const handleEditRecipe = (recipeId) => {
     navigate(`/edit-recipe/${recipeId}`);

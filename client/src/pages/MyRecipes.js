@@ -41,7 +41,7 @@ const MyRecipes = () => {
           />
         }
       />
-      <RecipeTable tableData={tableData} />
+      <RecipeTable tableData={tableData} setTableData={setTableData} />
     </>
   );
 };

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import InputComp from './InputComp';
 import axios from 'axios';
 import './NewRecipeForm/NewRecipeForm.css';
 
 const EditRecipe = ({ requestMethod }) => {
   let { recipeId } = useParams();
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
@@ -70,20 +71,16 @@ const EditRecipe = ({ requestMethod }) => {
     data.append('prepTime', fData['editPrepTime']);
 
     console.log(fData);
-    // for (const key in fData) {
-    //   if (key === 'recipeImg') {
-    //     data.append(key, fData[key][0]);
-    //   } else {
-    //     data.append(key, fData[key]);
-    //   }
-    // }
     axios
       .patch(`http://localhost:5000/recipes/${recipeId}`, data, {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       })
-      .then((res) => console.log(res.data.message))
+      .then((res) => {
+        alert(res.data.message);
+        navigate('/my-recipes');
+      })
       .catch((err) => console.log(err.message));
   };
 
